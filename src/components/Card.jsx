@@ -1,4 +1,4 @@
-import { FaHeart, FaRegEnvelope } from "react-icons/fa";
+import { FaRegEnvelope } from "react-icons/fa";
 import { IoIosCall } from "react-icons/io";
 import { BsBrowserChrome } from "react-icons/bs";
 import { CiHeart } from "react-icons/ci";
@@ -9,23 +9,25 @@ import { useState } from "react";
 
 const Card = (value) => {
   const { email, id, imgurl, name, phone, url } = value.value;
-  const [isred, setIsred] = useState(false);
+  const { handleShowModal } = value;
+  const { handleId } = value;
 
-  const handIeRed = () =>{
-    setIsred (!isred);
-    // if(isred=== true){
-    //setisred(false)S
-    //esle if (isred=== flase){
-      //setIsred(true)
-   // }
-    //}
-    console.log('asdfsad')
-  }
+  const [isred, setIsred] = useState(true);
+
+  const handleRed = () => {
+    setIsred(!isred);
+
+    // if (isred === true) {
+    //   setIsred(false);
+    // } else if (isred === false) {
+    //   setIsred(true);
+    // }
+  };
 
   return (
     <div className="border-2 border-black h-fit w-[300px]">
       <div className="bg-[#f5f5f5] flex justify-center items-center">
-        <img src={imgurl} alt="" />
+        <img className="h-[297px] w-[297px]" src={imgurl} alt="" />
       </div>
 
       <div className="p-4">
@@ -34,7 +36,7 @@ const Card = (value) => {
           <FaRegEnvelope />
           <p>{email}</p>
         </div>
-        <div className="flex gap-2 items-center ">
+        <div className="flex gap-2 items-center">
           <IoIosCall />
           <p>{phone}</p>
         </div>
@@ -43,19 +45,24 @@ const Card = (value) => {
           <p>{url}</p>
         </div>
       </div>
-      <div className="bg-[#f5f5f5] flex justify-between cursor-Pointer ">
-        <div   onClick ={handIeRed} className="border-r-2 p-4 w-1/3 flex  justify-center ">
-        
-        
-          {isred ? <FaHeart/> : <FcLike />}
-        
+      <div className="bg-[#f5f5f5] flex justify-between  ">
+        <div
+          onClick={handleRed}
+          className="border-r-2 p-4 w-1/3 flex  justify-center cursor-pointer"
+        >
+          {isred ? <FcLike /> : <CiHeart />}
         </div>
-        <div className="border-r-2 p-4 w-1/3 flex justify-center ">
+        <div
+          onClick={() => {
+            handleShowModal(true);
+            handleId(id);
+          }}
+          className="border-r-2 p-4 w-1/3 flex justify-center cursor-pointer"
+        >
           <FaPencil />
         </div>
-        <div className="border-r-2 p-4 w-1/3 flex justify-center">
-          <IoTrashBinSharp />
-          
+        <div className="border-r-2 p-4 w-1/3 flex justify-center cursor-pointer text-yellow-400">
+          <IoTrashBinSharp className="text-red-500" />
         </div>
       </div>
     </div>
